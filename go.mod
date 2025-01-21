@@ -1,4 +1,4 @@
-module github.com/cad/ovpm
+module github.com/rocinan/ovpm
 
 go 1.14
 
