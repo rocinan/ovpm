@@ -562,10 +562,6 @@ func (svr *Server) Emit() error {
 
 	}
 
-	if !checkIptablesExecutable() {
-		return fmt.Errorf("iptables executable can not be found")
-	}
-
 	if !svr.IsInitialized() {
 		return fmt.Errorf("you should create a server first. e.g. $ ovpm vpn create-server")
 	}
@@ -596,10 +592,6 @@ func (svr *Server) Emit() error {
 
 	if err := svr.emitCCD(); err != nil {
 		return fmt.Errorf("can not emit ccd: %s", err)
-	}
-
-	if err := svr.emitIptables(); err != nil {
-		return fmt.Errorf("can not emit iptables: %s", err)
 	}
 
 	if err := svr.emitCRL(); err != nil {
