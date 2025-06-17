@@ -472,52 +472,7 @@ func ensureNatEnabled() {
 
 // enableNat is an idempotent command that ensures nat is enabled for the vpn server.
 func enableNat() error {
-	if Testing {
-		return nil
-	}
-	// rif := routedInterface("ip", net.FlagUp|net.FlagBroadcast)
-	// if rif == nil {
-	// 	return fmt.Errorf("can not get routable network interface")
-	// }
-	rif := getOutboundInterface()
-	if rif == nil {
-		return fmt.Errorf("can not get default gw interface")
-	}
-
-	vpnIfc := vpnInterface()
-	if vpnIfc == nil {
-		return fmt.Errorf("can not get vpn network interface on the system")
-	}
-
-	// Enable ip forwarding.
-	TheServer().emitToFile("/proc/sys/net/ipv4/ip_forward", "1", 0)
-	ipt, err := iptables.NewWithProtocol(iptables.ProtocolIPv4)
-	if err != nil {
-		return fmt.Errorf("can not create new iptables object: %v", err)
-	}
-
-	svr := TheServer()
-
-	mask := net.IPMask(net.ParseIP(svr.Mask))
-	prefix := net.ParseIP(svr.Net)
-	netw := prefix.Mask(mask).To4()
-	netw[3] = byte(1) // Server is always gets xxx.xxx.xxx.1
-	ipnet := net.IPNet{IP: netw, Mask: mask}
-
-	// Append iptables nat rules.
-	if err := ipt.AppendUnique("nat", "POSTROUTING", "-s", ipnet.String(), "-o", rif.Name, "-j", "MASQUERADE"); err != nil {
-		return err
-	}
-
-	if err := ipt.AppendUnique("filter", "FORWARD", "-i", rif.Name, "-o", vpnIfc.Name, "-m", "state", "--state", "RELATED,ESTABLISHED", "-j", "ACCEPT"); err != nil {
-		return err
-	}
-
-	if err := ipt.AppendUnique("filter", "FORWARD", "-i", vpnIfc.Name, "-o", rif.Name, "-j", "ACCEPT"); err != nil {
-		return err
-	}
 	return nil
-
 }
 
 // HostID2IP converts a host id (32-bit unsigned integer) to an IP address.
