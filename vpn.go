@@ -16,10 +16,10 @@ import (
 	"time"
 
 	"github.com/asaskevich/govalidator"
-	"github.com/rocinan/ovpm/pki"
-	"github.com/rocinan/ovpm/supervisor"
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
+	"github.com/rocinan/ovpm/pki"
+	"github.com/rocinan/ovpm/supervisor"
 	"github.com/sirupsen/logrus"
 )
 

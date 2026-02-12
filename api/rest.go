@@ -2,15 +2,14 @@ package api
 
 import (
 	"fmt"
-	"google.golang.org/protobuf/encoding/protojson"
 	"net/http"
 	"strings"
 
+	"google.golang.org/protobuf/encoding/protojson"
+
 	"github.com/asaskevich/govalidator"
-	"github.com/rocinan/ovpm/api/pb"
-	assetfs "github.com/elazarl/go-bindata-assetfs"
-	"github.com/go-openapi/runtime/middleware"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/rocinan/ovpm/api/pb"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
@@ -55,30 +54,6 @@ func NewRESTServer(grpcPort string) (http.Handler, context.CancelFunc, error) {
 	if err != nil {
 		return nil, cancel, err
 	}
-
-	mux.HandleFunc("/api/specs/", specsHandler)
-	mware := middleware.Redoc(middleware.RedocOpts{
-		BasePath: "/api/docs/",
-		SpecURL:  "/api/specs/user.swagger.json",
-		Path:     "user",
-	}, gmux)
-	mware = middleware.Redoc(middleware.RedocOpts{
-		BasePath: "/api/docs/",
-		SpecURL:  "/api/specs/vpn.swagger.json",
-		Path:     "vpn",
-	}, mware)
-	mware = middleware.Redoc(middleware.RedocOpts{
-		BasePath: "/api/docs/",
-		SpecURL:  "/api/specs/network.swagger.json",
-		Path:     "network",
-	}, mware)
-	mware = middleware.Redoc(middleware.RedocOpts{
-		BasePath: "/api/docs/",
-		SpecURL:  "/api/specs/auth.swagger.json",
-		Path:     "auth",
-	}, mware)
-	mux.Handle("/api/", mware)
-
 	return allowCORS(mux), cancel, nil
 }
 func preflightHandler(w http.ResponseWriter, r *http.Request) {
