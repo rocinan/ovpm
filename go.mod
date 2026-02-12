@@ -5,9 +5,6 @@ go 1.14
 require (
 	github.com/asaskevich/govalidator v0.0.0-20200907205600-7a23bdc65eef
 	github.com/dustin/go-humanize v1.0.0
-	github.com/go-openapi/loads v0.20.1 // indirect
-	github.com/go-openapi/runtime v0.19.26
-	github.com/go-openapi/spec v0.20.2 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/uuid v1.2.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.3.0
