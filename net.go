@@ -9,9 +9,9 @@ import (
 
 	"time"
 
-	"github.com/sirupsen/logrus"
 	"github.com/asaskevich/govalidator"
 	"github.com/jinzhu/gorm"
+	"github.com/sirupsen/logrus"
 )
 
 // NetworkType distinguishes different types of networks that is defined in the networks table.
@@ -164,7 +164,7 @@ func CreateNewNetwork(name, cidr string, nettype NetworkType, via string) (*Netw
 	// Overwrite via with the parsed IPv4 string.
 	if nettype == ROUTE && via != "" {
 		viaIP := net.ParseIP(via).To4()
-		if err != nil {
+		if viaIP == nil {
 			return nil, fmt.Errorf("can not parse IPv4 %s: %v", via, err)
 		}
 		via = viaIP.String()
