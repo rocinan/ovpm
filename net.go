@@ -11,7 +11,6 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/asaskevich/govalidator"
-	"github.com/coreos/go-iptables/iptables"
 	"github.com/jinzhu/gorm"
 )
 

@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/asaskevich/govalidator"
-	"github.com/cad/ovpm"
-	"github.com/cad/ovpm/errors"
+	"github.com/rocinan/ovpm"
+	"github.com/rocinan/ovpm/errors"
 	"github.com/urfave/cli"
 )
 

@@ -7,8 +7,8 @@ import (
 	"os"
 
 	"github.com/asaskevich/govalidator"
-	"github.com/cad/ovpm/api/pb"
-	"github.com/cad/ovpm/errors"
+	"github.com/rocinan/ovpm/api/pb"
+	"github.com/rocinan/ovpm/errors"
 	"github.com/olekukonko/tablewriter"
 	"github.com/sirupsen/logrus"
 )

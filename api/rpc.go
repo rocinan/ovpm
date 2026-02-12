@@ -8,9 +8,9 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 
-	"github.com/cad/ovpm"
-	"github.com/cad/ovpm/api/pb"
-	"github.com/cad/ovpm/permset"
+	"github.com/rocinan/ovpm"
+	"github.com/rocinan/ovpm/api/pb"
+	"github.com/rocinan/ovpm/permset"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 )

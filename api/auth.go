@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/cad/ovpm"
-	"github.com/cad/ovpm/permset"
+	"github.com/rocinan/ovpm"
+	"github.com/rocinan/ovpm/permset"
 	"github.com/sirupsen/logrus"
 	gcontext "golang.org/x/net/context"
 	"google.golang.org/grpc"

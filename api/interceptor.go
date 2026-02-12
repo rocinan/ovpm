@@ -6,8 +6,8 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/asaskevich/govalidator"
-	"github.com/cad/ovpm"
-	"github.com/cad/ovpm/permset"
+	"github.com/rocinan/ovpm"
+	"github.com/rocinan/ovpm/permset"
 	gcontext "golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"

@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cad/ovpm/pki"
+	"github.com/rocinan/ovpm/pki"
 )
 
 func TestNewCA(t *testing.T) {

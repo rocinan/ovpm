@@ -6,9 +6,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/cad/ovpm/pki"
+	"github.com/rocinan/ovpm/pki"
 
-	"github.com/cad/ovpm"
+	"github.com/rocinan/ovpm"
 	"github.com/sirupsen/logrus"
 )
 

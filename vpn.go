@@ -16,9 +16,8 @@ import (
 	"time"
 
 	"github.com/asaskevich/govalidator"
-	"github.com/cad/ovpm/pki"
-	"github.com/cad/ovpm/supervisor"
-	"github.com/coreos/go-iptables/iptables"
+	"github.com/rocinan/ovpm/pki"
+	"github.com/rocinan/ovpm/supervisor"
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
 	"github.com/sirupsen/logrus"
@@ -921,63 +920,6 @@ func (svr *Server) emitDHParams() error {
 func (svr *Server) emitIptables() error {
 	if Testing {
 		return nil
-	}
-	ipt, err := iptables.NewWithProtocol(iptables.ProtocolIPv4)
-	if err != nil {
-		return fmt.Errorf("can not create new iptables object: %v", err)
-	}
-
-	for _, network := range GetAllNetworks() {
-		associatedUsernames := network.GetAssociatedUsernames()
-		switch network.Type {
-		case SERVERNET:
-			users, err := GetAllUsers()
-			if err != nil {
-				return err
-			}
-
-			// Find associated users and emit iptables configs for the users
-			// regarding the network's type and attributes.
-			for _, user := range users {
-				// Find out if the user is associated or not.
-				var found bool
-				for _, auser := range associatedUsernames {
-					if user.Username == auser {
-						found = true
-						break
-					}
-				}
-
-				userIP, _, err := net.ParseCIDR(user.GetIPNet())
-				if err != nil {
-					return err
-				}
-				_, networkIPNet, err := net.ParseCIDR(network.CIDR)
-				if err != nil {
-					return err
-				}
-
-				// get destination network's iface
-				iface := interfaceOfIP(networkIPNet)
-				if iface == nil {
-					logrus.Warnf("network doesn't exist on server %s[SERVERNET]: cant find interface for %s", network.Name, networkIPNet.String())
-					return nil
-				}
-				// enable nat for the user to the destination network n
-				if found {
-					err = ipt.AppendUnique("nat", "POSTROUTING", "-s", userIP.String(), "-o", iface.Name, "-j", "MASQUERADE")
-					if err != nil {
-						logrus.Error(err)
-						return err
-					}
-				} else {
-					err = ipt.Delete("nat", "POSTROUTING", "-s", userIP.String(), "-o", iface.Name, "-j", "MASQUERADE")
-					if err != nil {
-						logrus.Debug(err)
-					}
-				}
-			}
-		}
 	}
 	return nil
 }

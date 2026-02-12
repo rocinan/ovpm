@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cad/ovpm/pki"
-	"github.com/cad/ovpm/supervisor"
+	"github.com/rocinan/ovpm/pki"
+	"github.com/rocinan/ovpm/supervisor"
 	"github.com/sirupsen/logrus"
 )
 

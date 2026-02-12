@@ -14,8 +14,8 @@ import (
 
 	"google.golang.org/grpc"
 
-	"github.com/cad/ovpm"
-	"github.com/cad/ovpm/api"
+	"github.com/rocinan/ovpm"
+	"github.com/rocinan/ovpm/api"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )

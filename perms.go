@@ -1,6 +1,6 @@
 package ovpm
 
-import "github.com/cad/ovpm/permset"
+import "github.com/rocinan/ovpm/permset"
 
 // OVPM available permissions.
 const (
