@@ -8,12 +8,12 @@ import (
 	"os"
 	"time"
 
-	"github.com/sirupsen/logrus"
+	humanize "github.com/dustin/go-humanize"
+	"github.com/olekukonko/tablewriter"
 	"github.com/rocinan/ovpm"
 	"github.com/rocinan/ovpm/api/pb"
 	"github.com/rocinan/ovpm/errors"
-	humanize "github.com/dustin/go-humanize"
-	"github.com/olekukonko/tablewriter"
+	"github.com/sirupsen/logrus"
 )
 
 // userListAction lists existing VPN users on the terminal.
@@ -53,8 +53,18 @@ func userListAction(rpcServURLStr string) error {
 		return err
 	}
 
+	usernames := make([]string, 0, len(userListResp.Users))
+	for _, user := range userListResp.Users {
+		usernames = append(usernames, user.Username)
+	}
+	ipOutByUsername, err := ovpm.GetUserIPOutByUsernames(usernames)
+	if err != nil {
+		exit(1)
+		return errors.UnknownSysError(err)
+	}
+
 	// Prepare table data.
-	header := []string{"#", "username", "ip", "created", "crt exp", "push gw", "admin"}
+	header := []string{"#", "username", "ip", "external ip", "created", "crt exp", "push gw", "admin"}
 	rows := [][]string{}
 	for i, user := range userListResp.Users {
 		isConnected := " "
@@ -98,6 +108,7 @@ func userListAction(rpcServURLStr string) error {
 			fmt.Sprintf("%v", i+1),
 			isConnected + " " + user.Username,
 			fmt.Sprintf("%s %s", user.IpNet, static),
+			ipOutByUsername[user.Username],
 			createdAt,
 			isValidCRT,
 			isPushGW,

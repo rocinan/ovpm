@@ -7,11 +7,11 @@ import (
 
 	passlib "gopkg.in/hlandau/passlib.v1"
 
-	"github.com/sirupsen/logrus"
 	"github.com/asaskevich/govalidator"
-	"github.com/rocinan/ovpm/pki"
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
+	"github.com/rocinan/ovpm/pki"
+	"github.com/sirupsen/logrus"
 )
 
 // dbRevokedModel is a database model for revoked VPN users.
@@ -36,6 +36,13 @@ type dbUserModel struct {
 	Admin              bool
 	AuthToken          string // auth token
 	Description        string
+	IPIn               string `gorm:"column:ip_in;type:varchar(255)"`
+	IPOut              string `gorm:"column:ip_out;type:varchar(255)"`
+	IsActive           int    `gorm:"column:is_active;type:integer;not null;default:0"`
+	Device             string `gorm:"column:device;type:varchar(255)"`
+	IsBlock            int    `gorm:"column:is_block;type:integer;not null;default:0"`
+	Period             string `gorm:"column:period;type:varchar(255)"`
+	ActiveCode         string `gorm:"column:active_code;type:varchar(255)"`
 }
 
 // User represents a vpn user.
@@ -192,7 +199,7 @@ func CreateNewUser(username, password string, nogw bool, hostid uint32, admin bo
 		NoGW:               nogw,
 		HostID:             hostid,
 		Admin:              admin,
-		Description:		description,
+		Description:        description,
 	}
 	user.setPassword(password)
 
